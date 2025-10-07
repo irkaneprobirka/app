@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import './index.scss';
 
 export default function App() {
   const [input1, setInput1] = useState("");
@@ -21,18 +22,24 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input1, input2 })
       });
-      alert("все ок");
+      alert("Данные сохранены");
     } catch (e) {
       console.error(e);
     }
   };
 
   return (
-    <div>
-      <input value={input1} onChange={e => setInput1(e.target.value)} placeholder="значение1" />
-      <br /><br />
-      <input value={input2} onChange={e => setInput2(e.target.value)} placeholder="значение2" />
-      <br /><br />
+    <div className="wrapper">
+      <input 
+        value={input1} 
+        onChange={e => setInput1(e.target.value)} 
+        placeholder="Значение 1" 
+      />
+      <input 
+        value={input2} 
+        onChange={e => setInput2(e.target.value)} 
+        placeholder="Значение 2" 
+      />
       <button onClick={handleSave}>Сохранить</button>
     </div>
   );

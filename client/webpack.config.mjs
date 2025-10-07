@@ -5,10 +5,11 @@ export default {
   entry: "./src/index.jsx",
   output: {
     path: path.resolve("dist"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: "/",
   },
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: [".js", ".jsx"],
   },
   module: {
     rules: [
@@ -17,18 +18,28 @@ export default {
         loader: "esbuild-loader",
         options: {
           loader: "jsx",
-          target: "es2015"
-        }
-      }
-    ]
+          target: "es2015",
+        },
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "public/index.html"
-    })
+      template: "public/index.html",
+    }),
   ],
   devServer: {
+    host: "0.0.0.0",
     port: 3000,
-    hot: true
-  }
+    hot: true,
+    allowedHosts: "all",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+    },
+  },
 };
