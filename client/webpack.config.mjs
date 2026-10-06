@@ -1,4 +1,5 @@
 import path from "path";
+import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 
 export default {
@@ -6,7 +7,8 @@ export default {
   output: {
     path: path.resolve("dist"),
     filename: "bundle.js",
-    publicPath: "/",
+    publicPath: "auto",
+    uniqueName: "app1",
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -28,6 +30,11 @@ export default {
     ],
   },
   plugins: [
+    new webpack.container.ModuleFederationPlugin({
+      name: "app1", filename: "remoteEntry.js",
+      exposes: { "./App": "./src/App.jsx" },
+      shared: { react: { singleton: true, requiredVersion: "^18.2.0" }, "react-dom": { singleton: true, requiredVersion: "^18.2.0" } },
+    }),
     new HtmlWebpackPlugin({
       template: "public/index.html",
     }),

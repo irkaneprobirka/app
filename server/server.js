@@ -17,4 +17,5 @@ app.post("/api/inputs", (req, res) => {
   res.json({ success: true });
 });
 
-app.listen(4005, () => console.log("started"));
+const port = Number(process.env.PORT || 4005);
+app.listen(port, "0.0.0.0", () => console.log("API listening on port " + port));
